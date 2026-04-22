@@ -8,19 +8,22 @@ public class VehiculoElectrico : Vehiculo
 {
     private double kwhBase;
 
-    public VehiculoElectrico(string patente, string marca, string modelo, int anio, double capacidadCarga, 
-        Sucursal sucursal, double kwhBase) : base(VehiculoTipo.Electrico, patente, marca, modelo, anio, capacidadCarga, sucursal)
+    public VehiculoElectrico(string patente, string marca, string modelo, int anio, double capacidadCarga,
+                             Sucursal sucursal, double kwhBase)
+        : base(VehiculoTipo.Electrico, patente, marca, modelo, anio, capacidadCarga, sucursal)
     {
         this.kwhBase = kwhBase;
     }
 
-    public double GetKwhBase()
-    {
-        return kwhBase;
-    }
+    public double GetKwhBase() => kwhBase;
 
     public override double CalcularConsumo(double kilometros)
     {
-        return kilometros * kwhBase;
+        double total = (kwhBase / 100) * kilometros;
+        if (GetCapacidadCarga() >= 1200)
+        {
+            total = total + (0.15 * total);
+        }
+        return total;
     }
 }
